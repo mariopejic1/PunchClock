@@ -4,6 +4,11 @@ import 'package:go_router/go_router.dart';
 import 'login_screen.dart';
 import 'employee_home.dart';
 import 'admin_dashboard.dart';
+import 'register_screen.dart';
+import 'location_form_screen.dart';
+import 'location_list_screen.dart';
+import 'schedule_form_screen.dart';
+import 'schedule_list_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,6 +26,13 @@ final GoRouter _router = GoRouter(
     GoRoute(path: '/', builder: (context, state) => LoginScreen()),
     GoRoute(path: '/employee', builder: (context, state) => EmployeeHome()),
     GoRoute(path: '/admin', builder: (context, state) => AdminDashboard()),
+    GoRoute(path: '/register',builder: (context, state) => RegisterScreen()),
+    GoRoute(path: '/add-location',builder: (context, state) {final initialLoc = state.extra as Map<String, dynamic>?;
+    return LocationFormScreen(initialLocation: initialLoc);}),
+    GoRoute(path: '/locations',builder: (context, state) => LocationListScreen()),
+    GoRoute(path: '/schedules',builder: (context, state) => ScheduleListScreen()),
+    GoRoute(path: '/add-schedule',builder: (context, state) {final initialSched = state.extra as Map<String, dynamic>?;
+    return ScheduleFormScreen(initialSchedule: initialSched);},),  
   ],
 );
 

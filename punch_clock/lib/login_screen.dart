@@ -46,6 +46,33 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  Future<void> _register() async {
+    if (_emailController.text.trim().isEmpty || _passwordController.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Email i lozinka ne smiju biti prazni!"), backgroundColor: Colors.orange),
+      );
+      return; 
+    }
+    setState(() => _isLoading = true);
+    try {
+      await supabase.auth.signUp(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+        data: {'name': 'Novi Korisnik'}, 
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Uspješna registracija! Sada se možete prijaviti."), backgroundColor: Colors.green),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Greška: $e"), backgroundColor: Colors.red),
+      );
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
   @override
   void dispose() {
     _emailController.dispose();
@@ -91,6 +118,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     onPressed: _login,
                     child: Text("PRIJAVI SE"),
                   ),
+            SizedBox(height: 10), 
+            TextButton(
+              onPressed: () {
+                context.push('/register'); 
+              },
+              child: Text("Nemaš račun? Registriraj se ovdje"),
+            ),
           ],
         ),
       ),

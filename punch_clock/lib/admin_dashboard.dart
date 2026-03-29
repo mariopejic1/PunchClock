@@ -36,10 +36,10 @@ class AdminDashboard extends StatelessWidget {
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
                 children: [
-                  _adminCard(Icons.location_on, "Lokacije", Colors.blue),
-                  _adminCard(Icons.people, "Zaposlenici", Colors.green),
-                  _adminCard(Icons.calendar_month, "Rasporedi", Colors.orange),
-                  _adminCard(Icons.assessment, "Izvještaji", Colors.purple),
+                  _adminCard(context, Icons.location_on, "Lokacije", Colors.blue, '/locations'),
+                  _adminCard(context, Icons.people, "Zaposlenici", Colors.green, '/'),
+                  _adminCard(context, Icons.calendar_month, "Rasporedi", Colors.orange, '/schedules'),
+                  _adminCard(context, Icons.assessment, "Izvještaji", Colors.purple, '/'),
                 ],
               ),
             ),
@@ -71,20 +71,20 @@ class AdminDashboard extends StatelessWidget {
     );
   }
 
-  Widget _adminCard(IconData icon, String title, Color color) {
+    Widget _adminCard(BuildContext context, IconData icon, String title, Color color, String route) {
     return Card(
       elevation: 4,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: InkWell( 
         onTap: () {
-          print("Kliknuto na $title");
+          context.push(route); 
         },
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(icon, size: 40, color: color),
-            SizedBox(height: 10),
-            Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+            const SizedBox(height: 10),
+            Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
           ],
         ),
       ),
